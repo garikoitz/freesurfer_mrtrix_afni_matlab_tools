@@ -1,0 +1,15 @@
+[
+	{
+		"flavor": "",
+		"hook": "",
+		"importance": "",
+		"localHookTemplate": "",
+		"name": "freesurfer_mrtrix_afni_matlab_tools",
+		"pathPlacement": "prepend",
+		"subfolder": "",
+		"toolboxRoot": "",
+		"type": "git",
+		"update": "",
+		"url": "https://github.com/garikoitz/freesurfer_mrtrix_afni_matlab_tools.git"
+	}
+]

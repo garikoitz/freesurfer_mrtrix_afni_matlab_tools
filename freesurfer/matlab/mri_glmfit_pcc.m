@@ -9,16 +9,11 @@ function r = mri_glmfit_pcc(glmdir)
 % too).  The output will be two files called pcc.ext and z.ext where
 % ext is the file format extension found in the glmdir folder.
 %
-% $Id: mri_glmfit_pcc.m,v 1.2 2015/03/31 21:23:53 greve Exp $
 
 %
 % Original Author: Douglas Greve
-% CVS Revision Info:
-%    $Author: greve $
-%    $Date: 2015/03/31 21:23:53 $
-%    $Revision: 1.2 $
 %
-% Copyright (C) 2002-2007,
+% Copyright © 2021
 % The General Hospital Corporation (Boston, MA). 
 % All rights reserved.
 %

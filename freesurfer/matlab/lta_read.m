@@ -8,12 +8,8 @@ function [M lta] = lta_read(fname)
 % lta_read.m
 %
 % Original Author: Bruce Fischl
-% CVS Revision Info:
-%    $Author: greve $
-%    $Date: 2014/07/10 04:11:44 $
-%    $Revision: 1.5 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained

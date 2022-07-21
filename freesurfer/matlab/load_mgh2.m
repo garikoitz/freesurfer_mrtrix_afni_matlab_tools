@@ -19,12 +19,8 @@ return;
 % load_mgh2.m
 %
 % Original Author: Doug Greve
-% CVS Revision Info:
-%    $Author: nicks $
-%    $Date: 2011/03/02 00:04:12 $
-%    $Revision: 1.5 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained
@@ -86,6 +82,7 @@ MRI_LONG =   2 ;
 MRI_FLOAT =  3 ;
 MRI_SHORT =  4 ;
 MRI_BITMAP = 5 ;
+MRI_USHRT = 10 ;
 
 fseek(fid, unused_space_size, 'cof') ;
 
@@ -99,7 +96,9 @@ switch type
   case MRI_SHORT,
     vol = fread(fid, nv, 'short') ; 
   case MRI_INT,
-    vol = fread(fid, nv, 'int') ; 
+    vol = fread(fid, nv, 'int') ;
+  case MRI_USHRT,
+    vol = fread(fid, nv, 'uint16') ;      
 end
 if(~feof(fid))
   [mr_parms count] = fread(fid,4,'float32');

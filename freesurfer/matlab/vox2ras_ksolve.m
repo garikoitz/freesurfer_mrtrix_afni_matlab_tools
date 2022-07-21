@@ -8,10 +8,6 @@ function [M_V] = vox2ras_ksolve(M_R, Vc_Ps, varargin)
 %%
 %%	Rudolph Pienaar
 %%
-%% VERSION
-%%
-%%	$Id: vox2ras_ksolve.m,v 1.7 2011/03/02 00:04:13 nicks Exp $
-%%
 %% SYNOPSIS
 %%
 %%     [M_V] = vox2ras_ksolve(M_R, Vc_Ps, Vr_logicalSpace)
@@ -69,12 +65,8 @@ function [M_V] = vox2ras_ksolve(M_R, Vc_Ps, varargin)
 % vox2ras_ksolve.m
 %
 % Original Author: Rudolph Pienaar
-% CVS Revision Info:
-%    $Author: nicks $
-%    $Date: 2011/03/02 00:04:13 $
-%    $Revision: 1.7 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained

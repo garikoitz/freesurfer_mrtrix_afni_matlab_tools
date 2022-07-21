@@ -10,10 +10,6 @@ function [M_Ru1, M_Ru2, M_v1, M_v2] = vox2ras_rsolve(Vc_C, inPlaneRotation)
 %%
 %%	Rudolph Pienaar
 %%
-%% VERSION
-%%
-%% 	$Id: vox2ras_rsolve.m,v 1.6 2011/03/02 00:04:13 nicks Exp $
-%%
 %% SYNOPSIS
 %%
 %%     [M_Ru1 M_Ru2 M_v1 M_v2 ] = vox2ras_rsolve(Vc_C, inPlaneRotation)
@@ -112,12 +108,8 @@ v2	= zeros(3, 3);
 % vox2ras_rsolve.m
 %
 % Original Author: Rudolph Pienaar
-% CVS Revision Info:
-%    $Author: nicks $
-%    $Date: 2011/03/02 00:04:13 $
-%    $Revision: 1.6 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained

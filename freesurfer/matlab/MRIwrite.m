@@ -7,7 +7,7 @@ function err = MRIwrite(mri,fstring,datatype,permuteflag)
 %     volume, eg f_000.bfloat.
 %  3. NIFIT file, Eg, f.nii, f.nii.gz (uncompressed and compressed)
 %
-% mri should be a structure like that read by MRIread.m The goemetry
+% mri should be a structure like that read by MRIread.m The geometry
 % (ie, direction cosines, voxel resolution, and P0 are all recomputed
 % from mri.vox2ras0. So, if in the course of analysis, you changed
 % mri.x_r, this change will not be reflected in the output volume.
@@ -37,12 +37,8 @@ function err = MRIwrite(mri,fstring,datatype,permuteflag)
 % MRIwrite.m
 %
 % Original Author: Doug Greve
-% CVS Revision Info:
-%    $Author: greve $
-%    $Date: 2013/12/02 16:34:09 $
-%    $Revision: 1.15 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained
@@ -75,13 +71,16 @@ if(~isfield(mri,'volsize'))
   mri.volsize = [vsz(1) vsz(2) vsz(3)];
 end
 if(~isfield(mri,'nframes'))  mri.nframes = vsz(4); end
-if(~isfield(mri,'volres'))  mri.volres = [1 1 1];end
 if(~isfield(mri,'tr')) mri.tr = 0; end
 if(~isfield(mri,'te')) mri.te = 0; end
 if(~isfield(mri,'ti')) mri.ti = 0; end
 if(~isfield(mri,'flip_angle')) mri.flip_angle = 0;end
 if(~isfield(mri,'vox2ras0'))  mri.vox2ras0 = eye(4);end
-
+if(~isfield(mri,'volres'))
+    mri.volres = sqrt(sum(mri.vox2ras0(1:3,1:3).^2));
+end
+if(~isfield(mri,'scl_slope')) mri.scl_slope = 0; end
+if(~isfield(mri,'scl_inter')) mri.scl_inter = 0; end
   
 [fspec fstem fmt] = MRIfspec(fstring,0); % 0 = turn off checkdisk
 if(isempty(fspec))
@@ -140,6 +139,7 @@ switch(fmt)
    case 'int',    hdr.datatype = 8;   hdr.bitpix = 8*4;
    case 'float',  hdr.datatype = 16;  hdr.bitpix = 8*4;
    case 'double', hdr.datatype = 64;  hdr.bitpix = 8*8;
+   case 'char',   hdr.datatype = 256; hdr.bitpix = 8*1;
    case 'ushort', hdr.datatype = 512; hdr.bitpix = 8*2;
    case 'uint',   hdr.datatype = 768; hdr.bitpix = 8*4;
    otherwise,
@@ -152,8 +152,8 @@ switch(fmt)
   hdr.pixdim          = [0 mri.volres([2 1 3]) mri.tr]; % physical units
   %hdr.pixdim          = [0 mri.volres mri.tr]; % physical units
   hdr.vox_offset      = 348; % will be set again
-  hdr.scl_slope       = 0;
-  hdr.scl_inter       = 0;
+  hdr.scl_slope       = mri.scl_slope;
+  hdr.scl_inter       = mri.scl_inter;
   
   hdr.slice_end       = 0;
   

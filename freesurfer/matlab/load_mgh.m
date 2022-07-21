@@ -28,12 +28,8 @@ function [vol, M, mr_parms, volsz] = load_mgh(fname,slices,frames,headeronly)
 % load_mgh.m
 %
 % Original Author: Bruce Fischl
-% CVS Revision Info:
-%    $Author: greve $
-%    $Date: 2016/01/19 21:18:27 $
-%    $Revision: 1.22 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained
@@ -62,11 +58,12 @@ if (strcmpi(fname((strlen(fname)-3):strlen(fname)), '.MGZ') || ...
   gzipped =  round(rand(1)*10000000 + ...
 		   sum(int16(fname))) + round(cputime);
   %ind = findstr(fname, '.');
-  if(exist('/scratch'))
-    new_fname = sprintf('%s.load_mgh.%d.mgh', tempname('/scratch/'),gzipped);
-  else
-    new_fname = sprintf('/tmp/tmp.load_mgh.%d.mgh', gzipped);
-  end
+  new_fname = sprintf('%s.load_mgh.m.mgh', tempname(fsgettmppath));
+  %if(exist('/scratch'))
+  %  new_fname = sprintf('%s.load_mgh.%d.mgh', tempname('/scratch/'),gzipped);
+  %else
+  %  new_fname = sprintf('/tmp/tmp.load_mgh.%d.mgh', gzipped);
+  %end
   
   if(strcmp(computer,'MAC') || strcmp(computer,'MACI') || ismac)
     [status,msg] = unix(sprintf('gunzip -c %s > %s', fname, new_fname)) ;
@@ -160,6 +157,7 @@ MRI_LONG =   2 ;
 MRI_FLOAT =  3 ;
 MRI_SHORT =  4 ;
 MRI_BITMAP = 5 ;
+MRI_USHRT = 10 ;
 
 % Determine number of bytes per voxel
 switch type
@@ -168,6 +166,8 @@ switch type
  case MRI_UCHAR,
   nbytespervox = 1;
  case MRI_SHORT,
+  nbytespervox = 2;
+ case MRI_USHRT,
   nbytespervox = 2;
  case MRI_INT,
   nbytespervox = 4;
@@ -189,19 +189,29 @@ if(headeronly)
   return;
 end
 
+% set datatype to fread
+switch type
+ case MRI_FLOAT,
+  dtype = 'float32' ;
+ case MRI_UCHAR,
+  dtype = 'uchar' ;
+ case MRI_SHORT,
+  dtype = 'short' ;
+ case MRI_INT,
+  dtype = 'int' ;
+ case MRI_USHRT,
+  dtype = 'uint16' ;       
+end
+
+% preserve volume datatype if env var is set to 1
+if(getenv('FS_PRESERVE_MATLAB_VOLTYPE') == '1')
+  dtype = strcat('*', dtype) ;
+end 
 
 %------------------ Read in the entire volume ----------------%
 if(slices(1) <= 0 & frames(1) <= 0)
-  switch type
-   case MRI_FLOAT,
-    vol = fread(fid, nv, 'float32') ; 
-   case MRI_UCHAR,
-    vol = fread(fid, nv, 'uchar') ; 
-   case MRI_SHORT,
-    vol = fread(fid, nv, 'short') ; 
-   case MRI_INT,
-    vol = fread(fid, nv, 'int') ; 
-  end
+
+  vol = fread(fid, nv, dtype) ;
 
   if(~feof(fid))
     [mr_parms count] = fread(fid,4,'float32');
@@ -243,17 +253,8 @@ for frame = frames
   for slice = slices
     filepos = ((frame-1)*nvvol + (slice-1)*nvslice)*nbytespervox + filepos0;
     fseek(fid,filepos,'bof');
-    
-    switch type
-     case MRI_FLOAT,
-      [tmpslice nread]  = fread(fid, nvslice, 'float32') ; 
-     case MRI_UCHAR,
-      [tmpslice nread]  = fread(fid, nvslice, 'uchar') ; 
-     case MRI_SHORT,
-      [tmpslice nread]  = fread(fid, nvslice, 'short') ; 
-     case MRI_INT,
-      [tmpslice nread]  = fread(fid, nvslice, 'int') ; 
-    end
+
+    [tmpslice nread]  = fread(fid, nvslice, dtype) ; 
 
     if(nread ~= nvslice)
       fprintf('ERROR: load_mgh: reading slice %d, frame %d\n',slice,frame);

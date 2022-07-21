@@ -13,12 +13,8 @@ function [vertex_coords, faces, magic] = read_surf(fname)
 % read_surf.m
 %
 % Original Author: Bruce Fischl
-% CVS Revision Info:
-%    $Author: fischl $
-%    $Date: 2014/04/30 12:59:03 $
-%    $Revision: 1.7 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained
@@ -65,7 +61,7 @@ if((magic == QUAD_FILE_MAGIC_NUMBER) | (magic == NEW_QUAD_FILE_MAGIC_NUMBER))
   end
 elseif (magic == TRIANGLE_FILE_MAGIC_NUMBER)
   fgets(fid) ;
-  fgets(fid) ;
+  fscanf(fid,'\n');
   vnum = fread(fid, 1, 'int32') ;
   fnum = fread(fid, 1, 'int32') ;
   vertex_coords = fread(fid, vnum*3, 'float32') ; 

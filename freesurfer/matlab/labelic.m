@@ -32,12 +32,8 @@ function err = labelic(subject,apslice)
 % labelic.m
 %
 % Original Author: Doug Greve
-% CVS Revision Info:
-%    $Author: nicks $
-%    $Date: 2011/03/02 00:04:12 $
-%    $Revision: 1.3 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained
@@ -75,7 +71,7 @@ if(isempty(aseg)) return; end
 % Caudate
 % Pallidum
 % Lateral-Ventricle
-% Thalamus-Proper
+% Thalamus
 % VentralDC 28 60
 m0 = (aseg.vol == 10 | aseg.vol == 11 | ...
       aseg.vol == 12 | aseg.vol == 13 | ...

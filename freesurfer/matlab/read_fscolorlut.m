@@ -10,12 +10,8 @@ function [code, name, rgbv, tt] = read_fscolorlut(fname)
 % read_fscolorlut.m
 %
 % Original Author: Doug Greve
-% CVS Revision Info:
-%    $Author: greve $
-%    $Date: 2015/03/24 17:57:53 $
-%    $Revision: 1.8 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained

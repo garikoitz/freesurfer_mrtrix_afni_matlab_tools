@@ -5,18 +5,13 @@ function [v nocc] = MRIvote(vol)
 % frames. nocc is the number of times it occurs.
 % See also mri2.c::MRIvote()
 % 
-% $Id: MRIvote.m,v 1.2 2011/03/02 00:04:12 nicks Exp $
 
 %
 % MRIvote.m
 %
 % Original Author: Doug Greve
-% CVS Revision Info:
-%    $Author: nicks $
-%    $Date: 2011/03/02 00:04:12 $
-%    $Revision: 1.2 $
 %
-% Copyright © 2011 The General Hospital Corporation (Boston, MA) "MGH"
+% Copyright © 2021 The General Hospital Corporation (Boston, MA) "MGH"
 %
 % Terms and conditions for use, reproduction, distribution and contribution
 % are found in the 'FreeSurfer Software License Agreement' contained

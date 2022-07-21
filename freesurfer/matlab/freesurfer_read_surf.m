@@ -60,7 +60,6 @@ function [vertices, faces] = freesurfer_read_surf(fname)
 %          freesurfer_read_wfile
 %
 
-% $Revision: 1.2 $ $Date: 2011/02/07 21:47:40 $
 
 % Copyright (C) 2000  Darren L. Weber
 
@@ -68,8 +67,10 @@ function [vertices, faces] = freesurfer_read_surf(fname)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-ver = '$Revision: 1.2 $ $Date: 2011/02/07 21:47:40 $';
-fprintf('FREESURFER_READ_SURF [v %s]\n',ver(11:15));
+% There used to be a line here where ver was set to the version of
+% the file. Without it, "ver" reverts to a matlab defined structure
+% and generates an error.
+%fprintf('FREESURFER_READ_SURF [v %s]\n',ver(11:15));
 
 if(nargin < 1)
     help freesurfer_read_surf;
